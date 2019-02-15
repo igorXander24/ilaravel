@@ -93,3 +93,5 @@ Route::get('test', function() {
 Route::get('login', 'Auth\LoginController@showLoginForm');
 
 Route::post('login', 'Auth\LoginController@login');
+
+#este es un comentario
