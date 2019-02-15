@@ -1,0 +1,23 @@
+Clase 15
+[Arquitectura de Software REST, Representational State Transfer]
+Ciertas características que definen el comportamiento entre clientes y servidores.
+Gira alrededor de recursos.
+Definir url específicas que respondan a diferentes tipos de peticiones HTTP
+URL construidas alrededor de un recurso que dan respuestas específicas según el método HTTP
+
+
+REST
+METODO HTTP         URL                     ACCION                          RESPUESTA                               VIEW                        CONMETS
+-----------         ---                     ------                          ---------                               ----                        -------
+GET                 /messages               MessagesController@index        Todos los mensajes                      messages.index              3. [OK], devuelve una lista de mensajes
+GET                 /messages/create        MessagesController@create       Formulario de creación(create)          messages.create             1. [OK], devuelve un formulario
+POST                /messages               MessagesController@store        Guarda mensajes y redirecciona(store)   messages.index              2. [OK]
+GET                 /messages/{id}          MessagesController@show         Un mensaje específico                   messages.show               4. [OK]
+GET                 /messages/{id}/edit     MessagesController@edit         Formulario de edición                   messages.edit               5. [OK]
+PUT/PATCH           /messages/{id}          MessagesController@update       Actualiza mensaje y redirecciona        messages.update             6. [OK]
+DELETE              /messages/{id}          MessagesController@destroy      Elimina mensaje y redirecciona
+
+
+NOTA 1
+En la arquitectura REST, lo que se devuelven son vistas.
+En una API REST, lo retornado es JSON
