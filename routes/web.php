@@ -79,6 +79,7 @@ Route::resource(
 
 #<- Clase 19
 #<- LoginController
+/*
 Route::get('test', function() {
     $user = new User();
     $user->name = 'Jhoe';
@@ -88,10 +89,15 @@ Route::get('test', function() {
 
     return $user;
 });
+*/
 
-
-Route::get('login', 'Auth\LoginController@showLoginForm');
+Route::get('login', [
+    'as'    => 'login', #<- en la nueva version se de usar el as
+    'uses'  => 'Auth\LoginController@showLoginForm'
+]);
 
 Route::post('login', 'Auth\LoginController@login');
+
+Route::get('logout', 'Auth\LoginController@logout');
 
 #este es un comentario

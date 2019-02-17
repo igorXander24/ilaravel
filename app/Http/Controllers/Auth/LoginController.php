@@ -27,7 +27,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    #protected $redirectTo = '/home';
+    protected $redirectTo = '/mensajes'; #<- Especifica la ruta luego de hacer login
 
     /**
      * Create a new controller instance.

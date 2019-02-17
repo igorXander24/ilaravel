@@ -18,7 +18,7 @@ class Example
     {
         #<- Si la condición se cumple, continua, caso contrario se agrega un response con código 404 o 403
         #<- Para nombrar un middleware se debe de hacer de manera que identifique la accion que va a verificar
-        if(false) {
+        if(true) {
             return $next($request);
         }
         return response("No puedes continuar", 404);

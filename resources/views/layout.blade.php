@@ -34,11 +34,19 @@
             <a class="{{ activeMenu('saludos/*') }}" href="{{ route('saludos', 'Usuario') }}">Saludos</a>
             <!--<a class="{{ activeMenu('contactame') }}" href="{{ route('contactos') }}">Contacto</a>-->
             <a class="{{ activeMenu('mensajes/create') }}" href="{{ route('mensajes.create') }}">Contacto</a>
-            <a class="{{ activeMenu('mensajes') }}" href="{{ route('mensajes.index') }}">Mensajes</a>
+
             <!--
                 En la clase 19
                 La seccion mensajes solo los usuarios autorizados podrán acceder a ella
             -->
+            @if(auth()->check())
+                <a class="{{ activeMenu('mensajes') }}" href="{{ route('mensajes.index') }}">Mensajes</a>
+                <a href="/logout">Cerrar sessión de {{ auth()->user()->name }}</a>
+
+            @endif
+            @if(auth()->guest())
+                <a class="{{ activeMenu('login') }}" href="/login">Login</a>
+            @endif
         </nav>
     </header>
     @yield('contenido')

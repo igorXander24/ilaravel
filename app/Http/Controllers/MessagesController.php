@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\DB;
 
 class MessagesController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('auth', [
+            #'only' => #< metodos donde si queremos que se aplique el middleware
+            'except' => [
+                'create',
+                'store'
+            ]
+        ]); #<- PAra cuando quieres entrar sin haberte loggeado
+        #<- cuando se agrega y no se especifica, se aplica a todo.
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +48,8 @@ class MessagesController extends Controller
     {
         //
         #<- return "Mostrar el formulario de creación de mensajes!";
-        return view('messages.create');
+        return view('messages.create')->with('info', 'Hemos recibido tu mensaje'); #<- Los mensajes de session solo estan
+        #disponibles en el primer envio SERVIDOR -> CLIENTE
     }
 
     /**
@@ -78,7 +92,8 @@ class MessagesController extends Controller
 
 
         #<- Luego [REDIRECCIONAR]
-        return redirect()->route("mensajes.index");
+        #return redirect()->route("mensajes.index");
+        return redirect()->route("mensajes.create");
     }
 
     /**
