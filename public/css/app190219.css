@@ -1,0 +1,35 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+/**
+Este archivo pone a disposición variables, funciones etc....
+supongamos que tenemos un color que se repite mucho en nuestra app
+
+*/
+
+/**<- Las variables se declaran con $*/
+
+/** <- Nos podemos dar el lujo de olvidarnos del prefijo de los navegadores*/
+
+nav {
+  width: 100%;
+  /*<- Comentario*/
+  display: flex;
+  justify-content: space-around;
+  color: orange;
+}
+
+.active {
+  text-decoration: none;
+  color: #005400;
+}
+
+.error {
+  color: red;
+  font-size: 0.7em;
+}
+

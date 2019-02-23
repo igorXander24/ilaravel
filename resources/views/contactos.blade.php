@@ -14,7 +14,7 @@
         <p>
             <label for="nombre">
                 Nombre
-                <input type="text" name="nombre" value="{{ old('nombre') }}">
+                <input  type="text" name="nombre" value="{{ old('nombre') }}">
                 {!! $errors->first('nombre', '<span class="error">:message</span>') !!}
             </label>
         </p>

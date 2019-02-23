@@ -21,3 +21,162 @@ DELETE              /messages/{id}          MessagesController@destroy      Elim
 NOTA 1
 En la arquitectura REST, lo que se devuelven son vistas.
 En una API REST, lo retornado es JSON
+
+
+CLASE 20.
+Como se procesan los JS y CSS al estilo de laravel.
+en el archivo package.json se definen las dependencias o módulos de node.js
+javascript del lado del servidor
+
+en la carpeta vendor se guardan las dependencias de composer.
+
+node_modules y vendor son carpetas y no se deben de agregar al versionador por regla general.
+
+en el archivo webpack.mix.js
+es donde se ejecutarán todas las tareas de compilación y concatenación, minificación etc.
+todo eso con la ayuda de webpack que es un organizador de tareas. pero nos enfocaremos en elixir que ahora es
+laravel mix.
+
+en la carpeta resources/sass [archivos sin compilar] => public/css [archivos css compilados]
+para compilar usar el siguiente codigo
+npm run dev <- suele ser muy tedioso estar ejecutando este comando ante cualquier cambio en el archivo scss.
+para eso mejor es usar el siguiente comando
+npm run wacth <- no funciona en homestead
+usa el siguiente
+npm run watch-poll <-
+
+#<- Que pasa si quiero usar less en ves de usar sass :P
+los archivos de less se guardan en una carpeta llamada less
+en sass se pueden eliminar los punto y coma y las llaves
+
+[COMANDOS]
+una vez que hayamos terminado todo y estemos listos para enviar a producción ejecutar el siguiente comando
+para optimizar los archivos
+npm run production
+
+
+#<- VIDEO 20
+otras características de laravel-mix
+
+¿Como concatenar multiples archivos en uno solo, y tambien como utilizar browser sync para
+
+muy bien ya sabemos como combinar y procesar estilos.
+
+
+CLASE 22
+Sistema de control de acceso a usuario basado en roles.
+Si quieres conservar datos, sebes de agregar una nueva migración
+
+
+los metodos que se definen en el modelo
+auth()->user() => App\User = Eloquent
+Primero se hace una busqueda en el modelo de Eloquent
+Segundo hace la busqueda en el query builder
+
+
+#<- CLASE 23 [RELACIONES EN ELOQUENT]
+
+php artisan make:model Role -m  #<- Lo crea con toda la migración
+Relaccion de uno a uno y de uno a muchos
+
+#<- CLASE 24 [RELACIONES MANY TO MANY]
+Un usario pueda tener muchos usuarios
+
+#<- Una tabla Pivot, o una tabla intermedia
+php artisan make:migration users roles ---
+utilizar los nombres de las tablas a relacionar, ordenarlas alfabeticamente y en singular y separar por un subguion
+php artisan make:migration create_role_user_table
+
+[COMANDO QUE USA EL TUTOR]
+php artisan make:migration create_assigned_roles_table --create=assigned_roles
+
+[TINKER] #<- Para inteactuar con la aplicación
+php artisan tinker
+
+#<- Comandos dentro de tinker
+vagrant@homestead:~/code/ilaravel$ php artisan tinker
+Psy Shell v0.9.9 (PHP 7.3.1-1+ubuntu18.04.1+deb.sury.org+1 — cli) by Justin Hileman
+>>> $u = new App\User;\
+... $u->name = "Administrador";\
+... $u->email = "admin@email.com";\
+... $u->password = bcrypt("123123");\
+... $u->save();
+=> true
+>>> $u = new App\User;
+$u->name = "Moderador";
+$u->email = "mod@email.com";
+$u->password = bcrypt("123123");
+$u->save();
+=> true
+>>> $u = new App\User;
+$u->name = "Estudiante";
+$u->email = "estudiante@email.com";
+$u->password = bcrypt("123123");
+$u->save();
+=> true
+>>> $r = new App\Role;\
+... $r->name = "Admin";\
+... $r->display_name = "Administrador del sitio";\
+... $r->description = "Este role tiene los permisos para administrar el sitio entero";\
+... $r->save();
+Illuminate/Database/QueryException with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'description' in 'field list' (SQL: insert into `roles` (`name`, `dis
+play_name`, `description`, `updated_at`, `created_at`) values (Admin, Administrador del sitio, Este role tiene los permisos para administrar el sitio entero, 2019-02-22 05:0
+8:49, 2019-02-22 05:08:49))'
+>>> $r = new App\Role;
+$r->name = "Admin";
+$r->display_name = "Administrador del sitio";
+$r->descripcion = "Este role tiene los permisos para administrar el sitio entero";
+$r->save();
+=> true
+>>> $r = new App\Role;
+$r->name = "mod";
+$r->display_name = "Moderador de comentarios";
+$r->descripcion = "Este role tiene los permisos para moderar comentarios";
+$r->save();
+=> true
+>>> $r = new App\Role;
+$r->name = "estudiante";
+$r->display_name = "Estudiante";
+$r->descripcion = "Este role tiene los permisos de estudiante";
+$r->save();
+=> true
+>>> App\User::all()
+=> Illuminate\Database\Eloquent\Collection {#2943
+     all: [
+       App\User {#2941
+         id: 1,
+         name: "Administrador",
+         email: "admin@email.com",
+         email_verified_at: null,
+         created_at: "2019-02-22 05:04:40",
+         updated_at: "2019-02-22 05:04:40",
+       },
+       App\User {#2919
+         id: 2,
+         name: "Moderador",
+         email: "mod@email.com",
+         email_verified_at: null,
+         created_at: "2019-02-22 05:06:19",
+         updated_at: "2019-02-22 05:06:19",
+       },
+       App\User {#2928
+         id: 3,
+         name: "Estudiante",
+         email: "estudiante@email.com",
+         email_verified_at: null,
+         created_at: "2019-02-22 05:07:21",
+         updated_at: "2019-02-22 05:07:21",
+       },
+     ],
+   }
+>>> App\User::find(1)
+=> App\User {#2944
+     id: 1,
+     name: "Administrador",
+     email: "admin@email.com",
+     email_verified_at: null,
+     created_at: "2019-02-22 05:04:40",
+     updated_at: "2019-02-22 05:04:40",
+   }
+>>>
+vagrant@homestead:~/code/ilaravel$

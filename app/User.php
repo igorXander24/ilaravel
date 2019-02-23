@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password'
     ];
 
     /**
@@ -27,4 +27,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    #<- aqui se define la relación del usuario con el rol
+    #<- Aqui se define la relación en ELOQUENT, el usuario pertenece a un ROL
+    #<- Acceder al rol a traves del usuario
+    public function roles() {
+        #return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class, "assigned_roles"); #<- en las relaciones de muchos a muchos
+        #<- se debe especificar la tabla si se personaliza el nombre
+        #<-
+    }
+
+    #<- Método encargado de comparar los roles
+    public function hasRoles(array $roles) {
+        #return $this->role === $role;
+        #dd($this->role);
+
+        foreach ($roles as $role) {
+            if($this->role->name === $role) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

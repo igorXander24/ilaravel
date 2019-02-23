@@ -85,6 +85,14 @@ class MessagesController extends Controller
         $message->mensaje = $request->input('mensaje');
         $message->save();
         */
+        $this->validate($request, [
+            #<- Array con las reglas de validación
+            "nombre"    => "required",
+            "email"     => ["required", "email"],
+            "mensaje"   => ["required", "min:5"] #<- Si quieres ver las demas reglas de validacion ve a la documentación
+            #<- Cuando el formulario es pequeño tener la validación dentro del controlador no da problemas.
+            #<- Si son muchos los campos, lo mejor es crear requetsobjetc
+        ]);
 
         #<- 2. Recomendada por el TUTOR, segunda forma.
         Message::create($request->all());

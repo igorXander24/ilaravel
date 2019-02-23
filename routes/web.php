@@ -79,7 +79,8 @@ Route::resource(
 
 #<- Clase 19
 #<- LoginController
-/*
+
+
 Route::get('test', function() {
     $user = new User();
     $user->name = 'Jhoe';
@@ -89,7 +90,7 @@ Route::get('test', function() {
 
     return $user;
 });
-*/
+
 
 Route::get('login', [
     'as'    => 'login', #<- en la nueva version se de usar el as
@@ -101,3 +102,14 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout');
 
 #este es un comentario
+
+
+Route::resource(
+    'usuarios',          #<- recurso
+    'UsersController' #<- Controlador
+);
+
+
+Route::get('roles', function() {
+    return \App\Role::with('user')->get();
+});

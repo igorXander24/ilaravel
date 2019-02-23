@@ -3,11 +3,11 @@
 @section('contenido')
     <h1>Login</h1>
 
-    <form method="POST" action="/login">
+    <form method="POST" class="form-inline" action="/login">
         {{ csrf_field() }}
-        <input type="email" name="email" id="email" placeholder="Email">
-        <input type="password" name="password" id="password" placeholder="Password">
-        <input type="submit" value="Entrar">
+        <input class="form-control" type="email" name="email" id="email" placeholder="Email">
+        <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+        <input class="btn btn-success" type="submit" value="Entrar">
     </form>
     <br>
 @stop

@@ -14,25 +14,25 @@
             <p>
                 <label for="nombre">
                     Nombre
-                    <input type="text" name="nombre" value="{{ old('nombre') }}">
+                    <input class="form-control" type="text" name="nombre" value="{{ old('nombre') }}">
                     {!! $errors->first('nombre', '<span class="error">:message</span>') !!}
                 </label>
             </p>
             <p>
                 <label for="email">
                     Email
-                    <input type="email" name="email" value="{{ old('email') }}">
+                    <input class="form-control" type="email" name="email" value="{{ old('email') }}">
                     {!! $errors->first('email', '<span class="error">:message</span>') !!}
                 </label>
             </p>
             <p>
                 <label for="mensaje">
                     Mensaje
-                    <textarea name="mensaje">{{ old('mensaje') }}</textarea>
+                    <textarea class="form-control" name="mensaje">{{ old('mensaje') }}</textarea>
                     {!! $errors->first('mensaje', '<span class="error">:message</span>') !!}
                 </label>
             </p>
-            <input type="submit" value="Enviar">
+            <input class="btn btn-primary" type="submit" value="Enviar">
         </form>
     @endif
 @stop
