@@ -1,5 +1,5 @@
 <!-- Este archivo se va ha usar como plantilla, y todo lo que se repita en las demás páginas irá aqui. -->
-{{ dd(auth()->user()->roles->toArray()) }}
+
 <!doctype html>
 <html lang="es">
 <head>
