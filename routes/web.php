@@ -13,6 +13,7 @@ use App\User;
 
 # Route::get('/', ['as' => 'home', 'uses' => 'PagesController@home'])->middleware('example'); #<- El middleware definido
 Route::get('/', ['as' => 'home', 'uses' => 'PagesController@home']);
+
 #<- en el Kernel intercepta el request y dependiendo de su análisis permite continuar o no.
 
 Route::get('contactame', ['as' => 'contactos', 'uses' => 'PagesController@contact']);
