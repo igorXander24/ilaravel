@@ -56,7 +56,7 @@
                         <li class="nav-item {{ activeMenu('mensajes') }}">
                             <a class="nav-link" href="{{ route('mensajes.index') }}">Mensajes </a>
                         </li>
-                        @if(auth()->user()->hasRoles(['admin', 'estudiante']))
+                        @if(auth()->user()->hasRoles(['Admin', 'estudiante']))
                             <li class="nav-item {{ activeMenu('usuarios') }}">
                                 <a class="nav-link" href="{{ route('usuarios.index') }}">Usuarios </a>
                             </li>
@@ -89,8 +89,8 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownId">
+                                    <a class="dropdown-item" href="/usuarios/{{ auth()->id() }}/edit">Mi cuenta</a>
                                     <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
-
                                 </div>
                             </li>
                         @endif
@@ -126,6 +126,6 @@
     </div>
 
 
-    <script src="/js/all.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>

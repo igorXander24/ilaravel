@@ -33,6 +33,7 @@ class User extends Authenticatable
     #<- Acceder al rol a traves del usuario
     public function roles() {
         #return $this->belongsTo(Role::class);
+
         return $this->belongsToMany(Role::class, "assigned_roles"); #<- en las relaciones de muchos a muchos
         #<- se debe especificar la tabla si se personaliza el nombre
         #<-
@@ -51,5 +52,9 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+
+    public function isAdmin() {
+        return $this->hasRoles(['Admin']);
     }
 }

@@ -180,3 +180,16 @@ $r->save();
    }
 >>>
 vagrant@homestead:~/code/ilaravel$
+
+
+los middlewares te permiten pasan a un siguiente proceso.
+
+#POLITICAS DE ACCESO
+las politicas de acceso son simples calses de php que agrupan politicas de autorizacion basadas en los recursos
+ [COMANDO] php artisan make:policy UserPolicy
+
+ las politicas se tienen que registrar
+aqui es donde se asigna una politica de acceso a un modelo
+app/Providers/AuthServiceProvider.php
+
+

@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Http\Requests\UpdateUserRequest;
 
 class UsersController extends Controller
 {
 
     function __construct()
     {
+        /*
         $this->middleware([
             'auth',
-            'roles:admin,estudiante'
+            'roles:Admin,estudiante'
         ]);
+        */
+
+        $this->middleware('auth', ['except' => ['show']]);
+        $this->middleware('roles:Admin', ['except' => ['edit', 'update', 'show']]); #<- Ignorar el método edit.
+
         #$this->middleware('roles');
     }
 
@@ -23,7 +31,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = \App\User::all();
+        $users = User::all();
         return view('users.index', compact('users'));
     }
 
@@ -57,6 +65,8 @@ class UsersController extends Controller
     public function show($id)
     {
         //
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -65,9 +75,20 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) /**<- POLICY, verifica si el usuario que está visitando la ruta, es el mismo que está consultado la bd*/
     {
         //
+        $user = User::findOrFail($id);
+
+        #<- Antes de continuar o devolver la vista, se hacen uso de políticas
+
+        $this->authorize('edit', $user);
+        /**<- Puede ser algo confuso ya que solo le estamos pasando un parámetro, pero el método recibe dos parametros
+            lo que sucede es que el primer parámetro siempre es el usuario autenticado, y laravel lo pasa automáticamente.
+         */
+
+
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -77,9 +98,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         //
+        $user = User::findOrFail($id);
+
+        $this->authorize('update', $user);
+
+        $user->update($request->all());
+        return back()->with('info', 'Usuario actualizado');
     }
 
     /**
@@ -91,5 +118,11 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+
+        $this->authorize('delete', $user);
+        $user->delete();
+
+        return back();
     }
 }
