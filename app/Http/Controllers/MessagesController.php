@@ -85,6 +85,7 @@ class MessagesController extends Controller
         $message->mensaje = $request->input('mensaje');
         $message->save();
         */
+        /*
         $this->validate($request, [
             #<- Array con las reglas de validación
             "nombre"    => "required",
@@ -93,15 +94,18 @@ class MessagesController extends Controller
             #<- Cuando el formulario es pequeño tener la validación dentro del controlador no da problemas.
             #<- Si son muchos los campos, lo mejor es crear requetsobjetc
         ]);
+        */
 
         #<- 2. Recomendada por el TUTOR, segunda forma.
-        Message::create($request->all());
-
+        $message = Message::create($request->all()); #<- [1]
+        if(auth()->check()) { #<- El usuario autenticado
+            auth()->user()->messages()->save($message); #<- Se pasa el mensaje que se guarda en [1]
+        }
 
 
         #<- Luego [REDIRECCIONAR]
         #return redirect()->route("mensajes.index");
-        return redirect()->route("mensajes.create");
+        return redirect()->route("mensajes.create")->with('info', 'Hemos recibido tu mesaje');
     }
 
     /**

@@ -192,4 +192,432 @@ las politicas de acceso son simples calses de php que agrupan politicas de autor
 aqui es donde se asigna una politica de acceso a un modelo
 app/Providers/AuthServiceProvider.php
 
+#################################<- INTERACCION CON TINKER Y COLLECTION
 
+Microsoft Windows [Versión 10.0.17134.590]
+(c) 2018 Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\Usuario\code\ilaravel>cd ../..8
+El sistema no puede encontrar la ruta especificada.
+
+C:\Users\Usuario\code\ilaravel>cd ../..8
+El sistema no puede encontrar la ruta especificada.
+
+C:\Users\Usuario\code\ilaravel>cd ../../
+
+C:\Users\Usuario>cd Homestead
+
+C:\Users\Usuario\Homestead>ls
+"ls" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+
+C:\Users\Usuario\Homestead>vagrant ssh
+==> vagrant: A new version of Vagrant is available: 2.2.4 (installed version: 2.2.3)!
+==> vagrant: To upgrade visit: https://www.vagrantup.com/downloads.html
+
+Welcome to Ubuntu 18.04.1 LTS (GNU/Linux 4.15.0-43-generic x86_64)
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+vagrant@homestead:~$ php artisan tiken
+Could not open input file: artisan
+vagrant@homestead:~$ php artisan tinker
+Could not open input file: artisan
+vagrant@homestead:~$ tinker
+
+Command 'tinker' not found, did you mean:
+
+  command 'ticker' from deb ticker
+
+Try: sudo apt install <deb name>
+
+vagrant@homestead:~$ cd code
+vagrant@homestead:~/code$ ls
+ilaravel  irest
+vagrant@homestead:~/code$ cd ilaravel
+vagrant@homestead:~/code/ilaravel$ php artisan tinker
+Psy Shell v0.9.9 (PHP 7.3.1-1+ubuntu18.04.1+deb.sury.org+1 — cli) by Justin HilemanPsy Shell v0.9.9 (PHP 7.3.1-1+ubuntu18.04.1+deb.sury.org+1 — cli) by Justin Hileman
+>>> $users = []
+=> []
+>>> $users = [\]
+PHP Parse error: Syntax error, unexpected ']', expecting T_STRING on line 1
+>>> $users = [\
+...
+...
+...
+... clear
+... user =
+PHP Parse error: Syntax error, unexpected '=', expecting ',' or ')' or ']' on line 3
+>>>
+>>> $users = [
+... ['name' => 'Igor', 'age' => 28],
+... $users = [
+
+user =
+PHP Parse error: Syntax error, unexpected '=', expecting ',' or ')' or ']' on line 5
+>>> $users = [
+['name' => 'Igor', 'age' => 28],
+['name' => 'Jhoe', 'age' => 26],
+... ['name' => 'Wilson', 'age' => 26]];
+=> [
+     [
+       "name" => "Igor",
+       "age" => 28,
+     ],
+     [
+       "name" => "Jhoe",
+       "age" => 26,
+     ],
+     [
+       "name" => "Wilson",
+       "age" => 26,
+     ],
+   ]
+>>> use Illuminate\Support\Collection;
+>>> $a = new Collection($users);
+=> Illuminate\Support\Collection {#2955
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> #<- Segunda Forma
+>>> $b = Collection::make($users);
+=> Illuminate\Support\Collection {#2947
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> #<- Tercera forma
+>>> $c = collect($users);
+=> Illuminate\Support\Collection {#2946
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> $a
+=> Illuminate\Support\Collection {#2955
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> $b
+=> Illuminate\Support\Collection {#2947
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> $c
+=> Illuminate\Support\Collection {#2946
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> #<- Obtener el primer elemento del array
+>>> $users->first();
+PHP Error:  Call to a member function first() on array in Psy Shell code on line 1
+>>> $a->first();
+=> [
+     "name" => "Igor",
+     "age" => 28,
+   ]
+>>> #<- El último elemento con el método last
+>>> $a->last();
+=> [
+     "name" => "Wilson",
+     "age" => 26,
+   ]
+>>> #<- Cuántos elementos existen en el array?
+>>> $a->count
+Exception with message 'Property [count] does not exist on this collection instance.'
+>>> $a->count()
+=> 3
+>>> #<- Sumar las edades
+>>> $a->sum('age');
+=> 80
+>>> $a->avg('age')
+=> 26.666666666667
+>>> #<- Sacar un elemento
+>>> $a->slice(1);
+=> Illuminate\Support\Collection {#2945
+     all: [
+       1 => [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       2 => [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> $a = $b;
+=> Illuminate\Support\Collection {#2947
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> $a->push(['name' => 'Chistofer', 'age' => 24);
+PHP Parse error: Syntax error, unexpected ')', expecting ']' on line 1
+>>> $a->push(['name' => 'Chistofer', 'age' => 24];
+PHP Parse error: Syntax error, unexpected ';', expecting ')' on line 1
+>>> $a->push(['name' => 'Chistofer', 'age' => 24]);
+=> Illuminate\Support\Collection {#2947
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+       [
+         "name" => "Chistofer",
+         "age" => 24,
+       ],
+     ],
+   }
+>>> #<- Para eliminar un elemento
+>>> $a
+=> Illuminate\Support\Collection {#2947
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+       [
+         "name" => "Chistofer",
+         "age" => 24,
+       ],
+     ],
+   }
+>>> $b
+=> Illuminate\Support\Collection {#2947
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+       [
+         "name" => "Chistofer",
+         "age" => 24,
+       ],
+     ],
+   }
+>>> $a->splice(2, 1)
+=> Illuminate\Support\Collection {#2945
+     all: [
+       [
+         "name" => "Wilson",
+         "age" => 26,
+       ],
+     ],
+   }
+>>> $a
+=> Illuminate\Support\Collection {#2947
+     all: [
+       [
+         "name" => "Igor",
+         "age" => 28,
+       ],
+       [
+         "name" => "Jhoe",
+         "age" => 26,
+       ],
+       [
+         "name" => "Chistofer",
+         "age" => 24,
+       ],
+     ],
+   }
+>>> #<- pluck, devolver un array con la llave que se envia por parametro
+>>> $a->pluck('name');
+=> Illuminate\Support\Collection {#2945
+     all: [
+       "Igor",
+       "Jhoe",
+       "Chistofer",
+     ],
+   }
+>>> $a->pluck('age');
+=> Illuminate\Support\Collection {#2933
+     all: [
+       28,
+       26,
+       24,
+     ],
+   }
+>>> $d = $a->pluck('name');
+=> Illuminate\Support\Collection {#2956
+     all: [
+       "Igor",
+       "Jhoe",
+       "Chistofer",
+     ],
+   }
+>>> $d->contains('Jhoe');
+=> true
+>>> $d->contains('Jhoes');
+=> false
+>>> #<- Lo anterior fue el uso de contains
+>>> #<- [VENTAJA] ENCADEJAR METODOS
+>>> $a->pluck('name')->contains('Jhoe');
+=> true
+>>> #<- INTERCEPT, compara dos arrays y devuelve las coincidencias, es como un INNER JOIN
+>>> #<- El resultado es un array de elementos que contiene ambos array
+>>> $a->puck('name')->intersect(['Igor', 'Chistofer']);
+BadMethodCallException with message 'Method Illuminate/Support/Collection::puck does not exist.'
+>>> $a->pluck('name')->intersect(['Igor', 'Chistofer']);
+=> Illuminate\Support\Collection {#2958
+     all: [
+       0 => "Igor",
+       2 => "Chistofer",
+     ],
+   }
+>>> #<- Si no existe ningún elemento devuelve un array vacio
+>>> $a->pluck('name')->intersect(['Igor', 'Chistofer'])->count();
+=> 2
+>>> (bool) $a->pluck('name')->intersect(['Igor', 'Chistofer'])->count();
+=> true
+>>> #<- Para ver un listado completo de los métodos de la clase colecction dirigase a...
+>>> #<- Cualquier accion que se ejecute en ELOQUENT, este devuelve los datos en forma de Collection
+>>> use App\User;
+>>> User::all();
+=> Illuminate\Database\Eloquent\Collection {#2958
+     all: [
+       App\User {#2951
+         id: 1,
+         name: "Igor",
+         email: "admin@email.com",
+         email_verified_at: null,
+         created_at: "2019-02-22 05:04:40",
+         updated_at: "2019-03-11 17:58:05",
+       },
+       App\User {#2945
+         id: 2,
+         name: "Wilson",
+
+
+
+
+
+     ],
+   }
+>>> #<- Pero esa coleccion hereda los métodos de la clase Collection y tambien se implementaron algunos adicionales
+
+CLASE 28
+GUARDAR RELACIONES HASONE Y HASMANY
+
+#<- Definir la relación de usuario mensaje.
+
+COMANDO
+php artisan make:migration alter_messages_table --table=messages
+
+x
+#<- Ocultar campos cuando el usuario está autenticado.
+
+
+#<- REFORZAMIENTO DE RELACIONES
+
+#<- 1
+    [hasOne]
+    User [Modelo]                                           Phone [Modelo]  [user_id]
+    phone() { return $this->hasOne('Phone::class') }

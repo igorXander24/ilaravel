@@ -40,6 +40,9 @@ class User extends Authenticatable
     }
 
     #<- Método encargado de comparar los roles
+    #<- REESTRUCTURAR
+
+    /**
     public function hasRoles(array $roles) {
         #return $this->role === $role;
         #dd($this->role);
@@ -53,8 +56,30 @@ class User extends Authenticatable
         }
         return false;
     }
+    */
+
+    public function hasRoles(array $roles) {
+
+
+        return $this->roles->pluck('name')->intersect($roles)->count();
+
+        /*
+        foreach ($roles as $role) {
+            foreach ($this->roles as $userRole) {
+                if($userRole->name === $role) {
+                    return true;
+                }
+            }
+        }
+        return false;
+        */
+    }
 
     public function isAdmin() {
         return $this->hasRoles(['Admin']);
+    }
+
+    public function messages() {
+        return $this->hasMany(Message::class); #<- Un usuario puede tener varios mensajes
     }
 }
